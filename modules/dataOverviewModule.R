@@ -142,7 +142,7 @@ dataOverviewServer <- function(id) {
                               )))
     })
     
-  return( data = reactive({ data() }))
+  return(data)
 
   })
 }
