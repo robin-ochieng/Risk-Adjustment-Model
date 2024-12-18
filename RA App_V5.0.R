@@ -9,7 +9,10 @@ library(lubridate)
 library(zoo)
 library(ChainLadder)
 
+options(shiny.maxRequestSize = 10000 * 1024^2)  # 10,000 MB
+
 source("modules/dataOverviewModule.R", local = TRUE)[1]
+source("modules/dataInsightsModule.R", local = TRUE)[1]
 
 # Define a custom theme using bslib
 my_theme <- bs_theme(
@@ -24,7 +27,6 @@ my_theme <- bs_theme(
   navbar_fg = "#ffffff"  # White text color for readability
 )
 
-options(shiny.maxRequestSize = 1000 * 1024^2)  # 100 MB
 
 # UI
 ui <- bs4DashPage(
@@ -76,28 +78,7 @@ ui <- bs4DashPage(
       # Data Display Tab
       bs4TabItem(
         tabName = "data_insights",
-        fluidRow(
-          bs4Card(
-            title = "Claim Count by Statutory Class",
-            status = "primary",
-            solidHeader = TRUE,
-            plotOutput("claim_count_plot", height = "400px")
-          ),
-          bs4Card(
-            title = "Sum of Gross Paid by Statutory Class (KES)",
-            status = "primary",
-            solidHeader = TRUE,
-            plotOutput("gross_paid_plot", height = "400px")
-          )
-        ),
-        fluidRow(
-          bs4Card(
-            title = "Statistical Summary of Gross Paid (KES 'Million)",
-            status = "info",
-            solidHeader = TRUE,
-            DTOutput("stat_summary_table")
-          )
-        )
+        dataInsightsUI("data_insights_id")
       ),
       
       # Valuation Data Tab
@@ -188,49 +169,9 @@ ui <- bs4DashPage(
 # Server
 server <- function(input, output, session) {
   
-   overviewResults  <- dataOverviewServer("data_overview")
+   data <- dataOverviewServer("data_overview") 
 
-  
-  # Claim Count Plot
-  output$claim_count_plot <- renderPlot({
-    req(data())
-    ggplot(data(), aes(x = Statutory_Class, fill = Statutory_Class)) +
-      geom_bar(show.legend = FALSE) +
-      labs(title = "Claim Count by Statutory Class", x = "Statutory Class", y = "Count") +
-      theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  })
-  
-  # Sum of Gross Paid Plot
-  output$gross_paid_plot <- renderPlot({
-    req(data())
-    plot_data <- data() %>%
-      filter(!is.na(Gross_Paid)) %>%
-      group_by(Statutory_Class) %>%
-      summarise(Total_Gross_Paid = sum(Gross_Paid, na.rm = TRUE))
-    ggplot(plot_data, aes(x = Statutory_Class, y = Total_Gross_Paid, fill = Statutory_Class)) +
-      geom_bar(stat = "identity", show.legend = FALSE) +
-      labs(title = "Sum of Gross Paid by Statutory Class", x = "Statutory Class", y = "Gross Paid (KES)") +
-      theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  })
-  
-  # Statistical Summary Table
-  output$stat_summary_table <- renderDT({
-    req(data())
-    summary_data <- data() %>%
-      filter(!is.na(Gross_Paid)) %>%
-      group_by(Statutory_Class) %>%
-      summarise(
-        Mean = mean(Gross_Paid, na.rm = TRUE),
-        Median = median(Gross_Paid, na.rm = TRUE),
-        Min = min(Gross_Paid, na.rm = TRUE),
-        Max = max(Gross_Paid, na.rm = TRUE),
-        "75th Percentile" = quantile(Gross_Paid, 0.75, na.rm = TRUE)
-      ) %>%
-      mutate(across(where(is.numeric), ~ round(. / 1e6, 2))) # Convert to millions
-    datatable(summary_data, options = list(pageLength = 10))
-  })
+   dataInsightsServer("data_insights_id", data)
   
   # Valuation Data Table
   output$val_data_table <- renderDT({
