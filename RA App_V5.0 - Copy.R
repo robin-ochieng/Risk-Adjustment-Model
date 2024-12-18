@@ -59,13 +59,13 @@ ui <- bs4DashPage(
         fluidRow(
           bs4Card(
             title = "Claim Count by Statutory Class",
-            status = "primary",
+            status = "white",
             solidHeader = TRUE,
             plotOutput("claim_count_plot", height = "400px")
           ),
           bs4Card(
             title = "Sum of Gross Paid by Statutory Class (KES)",
-            status = "primary",
+            status = "white",
             solidHeader = TRUE,
             plotOutput("gross_paid_plot", height = "400px")
           )
@@ -73,7 +73,7 @@ ui <- bs4DashPage(
         fluidRow(
           bs4Card(
             title = "Statistical Summary of Gross Paid (KES 'Million)",
-            status = "info",
+            status = "white",
             solidHeader = TRUE,
             width = 12,
             DTOutput("stat_summary_table")
