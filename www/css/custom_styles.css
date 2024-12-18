@@ -1,0 +1,330 @@
+/* custom_styles.css */
+/* Apply the Mulish font to the entire body of the app */
+body {
+    font-family: 'Mulish', sans-serif; /* Use the Mulish font for all text */
+    background-color: #f4f4f4; /* Optional: set a background color */
+}
+
+/* General style for buttons used in the control bar */
+.btn-primary {
+    background-color: #007bff; /* Set button background color to primary blue */
+    color: white; /* Set button text color to white */
+    font-size: 16px; /* Set font size to 16px */
+}
+
+/* Style for the cards in the app body */
+.card-custom {
+    background-color: #ffffff; /* Set the background color for the card */
+    padding: 20px; /* Add padding inside the card */
+    border-radius: 10px; /* Round the corners of the card */
+    color: black; /* Set the text color to white */
+    margin-bottom: 20px; /* Add space below the card */
+}
+
+/* Ensure that selectInput elements inside .card-custom have appropriate styles */
+.card-custom select {
+    background-color: white; /* Set the background of the select input to white */
+    color: #0137A6; /* Set the text color to black */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Slightly rounded corners */
+    font-size: 14px; /* Set font size */
+    padding: 5px; /* Add some padding for better appearance */
+    width: 100%; /* Make the select input take full width of its container */
+}
+
+/* Optional: Adjust label color inside .card-custom if needed */
+.card-custom label {
+    color: #0137A6; /* Keep labels white to contrast with the blue background */
+}
+
+/* Style for the error messages in Shiny */
+.shiny-output-error {
+    color: #ff0000; /* Set error message color to red */
+}
+
+/* Prefix the error message with "Error: " */
+.shiny-output-error:before {
+    content: 'Error: ';
+}
+
+/* Style for the well panel */
+.well {
+    background-color: #ffffff; /* Set the background color of the well panel */
+    border-radius: 8px; /* Round the corners of the well panel */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add a subtle shadow for depth */
+}
+
+.control-bar {
+    position: absolute;
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%);
+  }
+  
+.control-button {
+    font-size: 14px;
+    margin-right: 10px; 
+    background-color: #007bff;
+    color: white; ;
+  }
+
+  /* custom_styles.css */
+  .sidebar-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    text-align: centre;
+    padding: 10px 0; /* Add padding to give some space around the logo */
+    background-color: #fff; /* Light background color to distinguish the logo area */
+    z-index: 1050;
+}
+  
+  .sidebar-logo img {
+    height: 70px; /* Adjust the height of the logo as needed */
+    max-width: 100%; /* Ensure the logo scales within the container */
+    background-color: #ffffff; /* Optional: Add a background behind the logo */
+    border-radius: 8px; /* Optional: Add rounded corners for a modern look */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for a more professional look */
+    padding: 10px; /* Optional: Add a slight shadow around the logo */
+  }
+
+
+  /* Set the background color of the sidebar */
+.main-sidebar {
+    background-color: #fff !important;  /* Apply the desired color */
+    box-shadow: none !important;
+    padding-top: 80px;
+  }
+  
+/* Style container to remove list style and position correctly */
+.header-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Align items to the start of the container */
+    margin-left: 0; /* Match the sidebar width */
+    position: relative; /* Ensure the container is positioned correctly */
+    width: 245px; /* Match the width of the sidebar-footer */
+    text-align: center; /* Center the title text */
+    padding: 5px 0; /* Add padding to give some space around the title */
+    background-color: #fff; /* Light background color to distinguish the title area */
+    border-radius: 8px; /* Optional: Add rounded corners for a modern look */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for a more professional look */
+
+}
+
+/* Style for the header title */
+.header-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0137A6;
+    padding-left: 5px; /* Space after the vertical line */
+}
+
+/* Footer styling */
+.body-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f4f2ee;
+    color: #0137A6;
+    text-align: center;
+    padding: 10px;
+    z-index: 1030;
+}
+
+
+/* Sidebar Items ----------------------------------------------------------------------------------*/
+.menu-container {
+    display: block; /* Align items to the start of the container */
+    position: fixed; /* Ensure the container is positioned correctly */    
+    top: 180px;  /* Aligns to the top of the viewport */
+    left: 0; 
+    width: 250px; /* Match the width of the sidebar-footer */
+    padding: 10px 5px; /* Add padding to give some space around the title */
+    background-color: #fff; /* Light background color to distinguish the title area */
+    border-radius: 8px; /* Optional: Add rounded corners for a modern look */
+    font-family: 'Mulish', sans-serif;
+    z-index: 1050;
+}
+
+
+
+
+/* ------------------------------------------------------------------------------------------- */
+
+/* Style for upload container */
+.upload-container {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #d1d1d1; 
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    color: #000000;
+  }
+
+  /* Style for the list items */
+.upload-container .custom-list-item {
+  margin-bottom: 10px;       /* Add consistent spacing between list items */
+  display: flex;            /* Align icon and text horizontally */
+  align-items: center;      /* Vertically align icon with text */
+}
+
+/* Style for sub-list items */
+.upload-container .sub-list-item .custom-list-item {
+  margin-bottom: 5px;       /* Slightly reduce spacing for sub-list items */
+}
+
+
+/* Adjust icon spacing */
+.upload-container .custom-list-item i {
+  margin-right: 6px;       /* Add space to the right of the icons */
+}
+  
+  /* Style for upload file input label */
+  .upload-label {
+    color: #0137A6;
+    font-size: 14px;
+  }
+  
+  /* Style for instruction header */
+  .instruction-header {
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+    color: #0137A6;
+    margin-bottom: 10px; 
+  }
+  
+  
+  /* Style for list item font sizes */
+  .list-item {
+    font-size: 14px;
+  }
+  
+  .sub-list-item {
+    font-size: 12px;
+  }
+  
+/* -------------Button styling------------------------------------------------------------------------------ */
+.btn-primary-custom {
+    background-color: #007bff;
+    color: white;
+    font-size: 12px;
+  }
+  
+  .custom-list-item {
+    color: #0137A6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  Responsiveness Custom Styles for Small Screens -----------------------------------------------------------------------------------------------------------------*/
+@media (max-width: 768px) {  /* Adjusts for tablets and smaller desktops */
+
+    /* Style for upload file input label */
+    .upload-label {
+      color: #0137A6;
+      font-size: 10px;
+    }
+
+      /* Style for instruction header */
+    .instruction-header {
+      font-size: 10px; 
+    }
+
+    /* Style for list item font sizes */
+    .list-item {
+      font-size: 8px;
+    }
+    
+    .sub-list-item {
+      font-size: 8px;
+    }
+
+    .menu-container {
+      width: 40%; /* Full width to utilize the available space */
+      padding: 10px; /* Reduced padding */
+      top: 60px; /* Adjusts the position to avoid overlap with any top bar */
+      left: 360px; /* Aligns to the left edge */
+      border-radius: 0; /* Optional: Removes border radius for a full-width fit */
+  }
+
+    .upload-container {
+        width: 100%; /* Full width to utilize the available space */
+        padding: 10px; /* Reduced padding */
+        top: 60px; /* Adjusts the position to avoid overlap with any top bar */
+        left: 0; /* Aligns to the left edge */
+        border-radius: 0; /* Optional: Removes border radius for a full-width fit */
+    }
+
+  .sidebar-logo img {
+      height: 50px; /* Slightly reduce the logo size for medium devices */
+  }
+  .sidebar-logo {
+      padding: 5px 0; /* Reduce padding to save space */
+      position: static; /* Optional: Adjust position if needed for layout */
+      width: 100%; /* Full width to accommodate smaller screen */
+  }
+
+}
+
+@media (max-width: 480px) { /* Adjusts for mobile devices */
+    /* Style for upload file input label */
+    .upload-label {
+      color: #0137A6;
+      font-size: 8px;
+    }
+     /* Style for instruction header */
+    .instruction-header {
+      font-size: 8px; 
+      }
+    /* Style for list item font sizes */
+    .list-item {
+      font-size: 6px;
+    }
+    
+    .sub-list-item {
+      font-size: 6px;
+    }
+
+    .menu-container {
+      position: static; /* Makes the menu static to flow with document */
+      width: 40%; /* Full width for better accessibility */
+      padding: 8px; /* Slightly less padding */
+      top: 60px; /* Adjusts the position to avoid overlap with any top bar */
+      left: 360px; /* Aligns to the left edge */
+      border-radius: 0; /* Removes border radius for a cleaner edge fit */
+  }
+  
+  .upload-container {
+      position: static; /* Makes the menu static to flow with document */
+      width: 100%; /* Full width for better accessibility */
+      padding: 8px; /* Slightly less padding */
+      border-radius: 0; /* Removes border radius for a cleaner edge fit */
+  }
+  .sidebar-logo img {
+      height: 40px; /* Further reduce the logo size for small devices */
+  }
+  .sidebar-logo {
+      padding: 5px 0; /* Minimize padding to maximize space */
+      position: static; /* Make it static to flow with the document structure */
+      width: 100%; /* Ensure it spans the full width */
+  }
+
+
+}
+
+
