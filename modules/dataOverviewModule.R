@@ -9,7 +9,7 @@ dataOverviewUI <- function(id) {
         br(),
         br(),
         br(),
-        class = "upload-container",
+        class = "upload-container1",
         fileInput(ns("file"), 
           label = tags$span("Upload Claims Data as an Excel or CSV File", class = "upload-label"),
           accept = c(".xlsx", ".xls", ".csv")
