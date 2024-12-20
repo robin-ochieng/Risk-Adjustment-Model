@@ -8,11 +8,19 @@ library(scales)
 library(lubridate)
 library(zoo)
 library(ChainLadder)
+library(shinycssloaders)
+library(bslib)
+library(plotly)
 
 options(shiny.maxRequestSize = 10000 * 1024^2)  # 10,000 MB
 
+
+
 source("modules/dataOverviewModule.R", local = TRUE)[1]
 source("modules/dataInsightsModule.R", local = TRUE)[1]
+source("modules/valDataModule.R", local = TRUE)[1]
+source("modules/cummulativeTriangleModule.R", local = TRUE)[1]
+source("modules/incrementalTriangleModule.R", local = TRUE)[1]
 
 # Define a custom theme using bslib
 my_theme <- bs_theme(
@@ -54,6 +62,7 @@ ui <- bs4DashPage(
       bs4SidebarMenuItem("Data Overview", tabName = "data_overview", icon = icon("table")),
       bs4SidebarMenuItem("Data Insights", tabName = "data_insights", icon = icon("chart-bar")),
       bs4SidebarMenuItem("Valuation Data", tabName = "valuation_data", icon = icon("calculator")),
+      bs4SidebarMenuItem("Incremental Triangles", tabName = "incremental_triangles", icon = icon("shapes")),
       bs4SidebarMenuItem("Cumulative Triangles", tabName = "cumulative_triangles", icon = icon("shapes")),
       bs4SidebarMenuItem("Bootstrapping Results", tabName = "bootstrapping_results", icon = icon("sync-alt")),
       bs4SidebarMenuItem("Risk Margin Download", tabName = "risk_margin_download", icon = icon("download"))
@@ -84,37 +93,18 @@ ui <- bs4DashPage(
       # Valuation Data Tab
       bs4TabItem(
         tabName = "valuation_data",
-        fluidRow(
-          bs4Card(
-            title = "Valuation Data Analysis (Quarterly)",
-            status = "primary",
-            solidHeader = TRUE,
-            collapsible = TRUE,
-            width = 12,
-            DTOutput("val_data_table")
-          )
-        )
+        valDataUI("valuation_data_id")
       ),
-      
+            # Cumulative Triangles Tab
+      bs4TabItem(
+        tabName = "incremental_triangles",
+        incrTriUI("incremental_triangles_id")
+      ),
+
       # Cumulative Triangles Tab
       bs4TabItem(
         tabName = "cumulative_triangles",
-        fluidRow(
-          bs4Card(
-            title = "Cumulative Triangle Analysis (Yearly)",
-            status = "primary",
-            solidHeader = TRUE,
-            collapsible = TRUE,
-            width = 12,
-            selectInput("statutory_class", "Select Statutory Class", choices = NULL),
-            uiOutput("loss_year_range_ui"),
-            actionButton("generate_triangle", "Generate Triangle"),
-            tags$div(
-              style = "font-size: 10px; max-width: 100%; overflow-x: auto; white-space: pre-wrap;",
-              verbatimTextOutput("cumulative_triangle_output")
-            )
-          )
-        )
+        cumTriUI("cumulative_triangles_id")
       ),
       
       # Bootstrapping Results Tab
@@ -173,42 +163,13 @@ server <- function(input, output, session) {
 
    dataInsightsServer("data_insights_id", data)
   
-  # Valuation Data Table
-  output$val_data_table <- renderDT({
-    req(data())
-    val_data <- data() %>%
-      mutate(
-        Acc_Quarters = paste0("Q", quarter(Loss_Date), "-", year(Loss_Date)),
-        Dev_period = floor(((year(Paid_Date) * 12 + month(Paid_Date)) - 
-                              (year(Loss_Date) * 12 + month(Loss_Date))) / 3)
-      ) %>%
-      select(Acc_Quarters, Gross_Paid, Dev_period)
-    datatable(val_data, options = list(pageLength = 15))
-  })
+   valDataServer("valuation_data_id", data)
+   
+   incrTriServer("incremental_triangles_id", data)
   
-  # Populate Statutory Class Choices
-  observeEvent(data(), {
-    req(data())
-    updateSelectInput(session, "statutory_class", choices = unique(data()$Statutory_Class))
-    updateSelectInput(session, "boot_statutory_class", choices = unique(data()$Statutory_Class))
-  })
+   cumTriServer("cumulative_triangles_id", data)
+
   
-  # Loss Year Range UI for Cumulative Triangles
-  output$loss_year_range_ui <- renderUI({
-    req(input$statutory_class)
-    available_years <- data() %>%
-      filter(Statutory_Class == input$statutory_class) %>%
-      pull(Loss_Date) %>%
-      year() %>%
-      unique() %>%
-      sort()
-    
-    sliderInput("loss_year_range", "Select Loss Year Range",
-                min = min(available_years),
-                max = max(available_years),
-                value = c(min(available_years), max(available_years)),
-                step = 1)
-  })
   
 
   
