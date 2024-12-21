@@ -165,6 +165,17 @@ body {
     color: #000000;
   }
 
+  /* Style for upload container */
+.upload-container1 {
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #d1d1d1; 
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  color: #000000;
+}
+
   /* Style for the list items */
 .upload-container .custom-list-item {
   margin-bottom: 10px;       /* Add consistent spacing between list items */
@@ -220,6 +231,16 @@ body {
 }
 
 
+.triangle-output-container {
+  font-size: 10px; 
+  width: 250vw; /* Ensures it uses full width of its parent */
+  max-width: 350vw; 
+  overflow-x: auto; 
+  white-space: pre-wrap; /* Maintains wrapping of lines */
+}
+
+
+
 
 
 
@@ -265,10 +286,16 @@ body {
     .upload-container {
         width: 100%; /* Full width to utilize the available space */
         padding: 10px; /* Reduced padding */
-        top: 60px; /* Adjusts the position to avoid overlap with any top bar */
         left: 0; /* Aligns to the left edge */
         border-radius: 0; /* Optional: Removes border radius for a full-width fit */
     }
+
+    .upload-container1 {
+      width: 94vw; /* Full width to utilize the available space */
+      padding: 10px; /* Reduced padding */
+      left: 0; /* Aligns to the left edge */
+      border-radius: 0; /* Optional: Removes border radius for a full-width fit */
+  }
 
   .sidebar-logo img {
       height: 50px; /* Slightly reduce the logo size for medium devices */
@@ -310,11 +337,18 @@ body {
   }
   
   .upload-container {
-      position: static; /* Makes the menu static to flow with document */
       width: 100%; /* Full width for better accessibility */
       padding: 8px; /* Slightly less padding */
       border-radius: 0; /* Removes border radius for a cleaner edge fit */
   }
+
+    
+  .upload-container1 {
+    width: 100%; /* Full width for better accessibility */
+    padding: 8px; /* Slightly less padding */
+    border-radius: 0; /* Removes border radius for a cleaner edge fit */
+}
+
   .sidebar-logo img {
       height: 40px; /* Further reduce the logo size for small devices */
   }
